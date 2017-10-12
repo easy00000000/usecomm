@@ -2,6 +2,9 @@
 git config --global user.name
 git config --global user.email 
 
+存下用户名密码
+git config --global credential.helper cache
+
 取得Git仓库
 
 初始化一个版本仓库
