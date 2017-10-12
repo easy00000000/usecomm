@@ -1,0 +1,20 @@
+create a volume named sqlvol1
+------
+docker run \
+--name data_mysql \
+-e MYSQL_ROOT_PASSWORD=toor \
+--mount source=vol_mysql,target=/var/lib/mysql \
+-d \
+mysql:latest
+------
+docker exec -it data_mysql bash
+------
+use volume from 
+------
+docker run \
+--name sqldata1 \
+--volumes-from data_mysql \
+-d \
+mysql:latest
+------
+docker exec -it sqldata1 bash
