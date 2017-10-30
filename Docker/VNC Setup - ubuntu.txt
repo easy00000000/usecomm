@@ -1,0 +1,11 @@
+# run as root
+docker run -it -p 5901:5901 -u root --name ubuntu_vnc easy0000/ubuntu_vnc:v1
+
+vnc.sh
+------
+$USER=root
+$export USER
+# Remove VNC lock (if process already killed)
+rm /tmp/.X1-lock /tmp/.X11-unix/X1
+# Run VNC server
+vncserver :1 -geometry 1280x800 -depth 24
