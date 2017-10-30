@@ -1,0 +1,32 @@
+# run as root
+docker run -it -p 5901:5901 -u root --name ubuntu_vnc easy0000/ubuntu_vnc:v3
+$USER=root
+$export USER
+$vncserver
+
+# Remove VNC lock (if process already killed)
+rm /tmp/.X1-lock /tmp/.X11-unix/X1
+# Run VNC server with tail in the foreground
+vncserver :1 -geometry 1280x800 -depth 24 && tail -F /root/.vnc/*.log
+
+# run as not root
+docker run -it -p 5901:5901 --name vnc_easy easy0000/ubuntu_vnc:v2
+$USER=easy
+$export USER
+$vncserver
+
+# run from jupyter note
+apt-get update 
+apt-get install -y \
+  firefox \
+  lxde-core \
+  lxterminal \
+  tightvncserver \
+  xrdp
+sed -i '0,/port=-1/{s/port=-1/port=5901/}' /etc/xrdp/xrdp.ini
+USER=jovyan
+export USER
+# Remove VNC lock (if process already killed)
+rm /tmp/.X1-lock /tmp/.X11-unix/X1
+# Run VNC server with tail in the foreground
+vncserver :1 -geometry 1280x800 -depth 24
