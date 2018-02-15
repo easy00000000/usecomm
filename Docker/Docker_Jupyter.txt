@@ -2,9 +2,9 @@ https://hub.docker.com/r/jupyter/base-notebook/
 
 ------
 docker pull jupyter/base-notebook
-docker run -it --name learn_jupyter_1 -v sharedfolder:/home/jovyan/work -p 8888:8888 jupyter/base-notebook
-docker restart learn_jupyter_1
-docker exec -i -t -u root learn_jupyter_2 bash
+docker run -it --name jupyter -v sharedfolder:/home/jovyan/work -p 8888:8888 jupyter/base-notebook
+docker restart jupyter
+docker exec -i -t -u root jupyter bash
 
 ------
 http://192.168.99.100:8888/?token=4880a9efb14bd631753924f3fb67333f4fd8deef30a8f783
