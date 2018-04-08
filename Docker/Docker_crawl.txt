@@ -1,0 +1,30 @@
+create a mysql container
+$ sudo docker run --name ccass-mysql -e MYSQL_ROOT_PASSWORD=toor -d mysql:latest
+
+run crawl_worker for celery
+$ sudo docker run --name ccass_2 -it -v ~/Documents:/home/work --link ccass-mysql:mysql crawl_worker:0.1
+
+run crawl-worker (scrapy+selenium+firefox) and link to mysql
+$ sudo docker run --name crawl-worker -it -v ~/Documents:/home/work --link ccass-mysql:mysql firefox:58.0
+
+run crawl-manager and link to mysql
+$ sudo docker run -it --name crawl-manager -v ~/Documents:/home/work --link ccass-mysql:mysql python:3.6
+
+install mysqlclient for python
+# apt-get install gcc
+# apt-get install libmysqlclient-dev
+# pip install mysqlclient
+
+TEST
+---
+import MySQLdb
+
+db = MySQLdb.connect(host='172.17.0.4', user='root', passwd='toor', db='mysql')
+cursor = db.cursor()
+
+cursor.execute("SELECT * FROM db")
+results = cursor.fetchall()
+
+for result in results:
+        print(result)
+---
